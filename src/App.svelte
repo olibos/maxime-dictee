@@ -119,12 +119,13 @@
     outline: none;
     text-align: center;
     width: 400px;
+	max-width: 80vw;
     font-size: 1.1em;
     font-weight: bold;
   }
 
   @media (min-width: 640px) {
-    main {
+    main, input[type=text] {
       max-width: none;
     }
   }

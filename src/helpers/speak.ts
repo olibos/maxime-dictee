@@ -1,11 +1,8 @@
 import { delay } from "./delay";
 
+let speakCounter = 0;
 export function speak(template: TemplateStringsArray, ...args: number[]): Promise<void>;
 export function speak(text:string): Promise<void>;
-
-let speakCounter = 0;
-
-
 export async function speak(text: string|TemplateStringsArray, ...args: number[])
 {
     if (speakCounter === 0)
