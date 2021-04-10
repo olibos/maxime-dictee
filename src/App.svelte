@@ -72,6 +72,9 @@
         type="text"
         bind:value={answer}
         bind:this={answerField}
+		spellcheck="false"
+		autocapitalize="none"
+		autocomplete="off"
         autofocus
       />
       <hr />
