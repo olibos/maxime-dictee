@@ -2,9 +2,19 @@ import { delay } from "./delay";
 
 export function speak(template: TemplateStringsArray, ...args: number[]): Promise<void>;
 export function speak(text:string): Promise<void>;
-export function speak(text: string|TemplateStringsArray, ...args: number[])
+
+let speakCounter = 0;
+
+
+export async function speak(text: string|TemplateStringsArray, ...args: number[])
 {
-    return new Promise<void>(async(ok, ko) =>
+    if (speakCounter === 0)
+    {
+        document.dispatchEvent(new CustomEvent("start-speak"));
+    }
+
+    speakCounter++;
+    await new Promise<void>(async(ok, ko) =>
     {
         if (typeof text !== 'string')
         {
@@ -32,4 +42,10 @@ export function speak(text: string|TemplateStringsArray, ...args: number[])
         message.onerror = ko;
         speechSynthesis.speak(message);
     });
+
+    speakCounter--;
+    if (speakCounter === 0)
+    {
+        document.dispatchEvent(new CustomEvent("end-speak"));
+    }
 }

@@ -1,42 +1,48 @@
 <script lang="ts">
-  import { text } from "svelte/internal";
-import SpeechAnimation from "./Components/SpeechAnimation.svelte";
-  import { delay } from "./helpers/delay";
+  import SpeechAnimation from "./Components/SpeechAnimation.svelte";
   import { shuffle } from "./helpers/shuffle";
   import { speak } from "./helpers/speak";
+  import { scale } from "svelte/transition";
 
-  const words = ["les vacances", "joyeuses Pâques", "les cloches"];
+  const words = ["les vacances", "du chocolat", "les cloches", "avril", "la nature", "le poussin", "l'arbre", "joyeuses Pâques", "l'herbe", "une chasse", "déposer", "ramasser", "elles poussent", "ils cherchent", "ils ont trouvé"];
 
   let index = -2;
   let answer = "";
+  let answerField: HTMLInputElement;
   let score = 0;
 
   async function start() {
     index = -1;
     shuffle(words);
     await speak`Bonjour Maxime!${500}Que le jeu commence!${200}`;
-    await speak(`Il y a ${words.length} mots a trouver`);
+    await speak(`Il y a ${words.length} mots a trouver. Voici le premier mot:`);
     index = 0;
     await repeat();
   }
 
   async function repeat() {
+    answerField && answerField.focus();
     words[index] && (await speak(words[index]));
   }
 
   async function validate(e: Event) {
     try {
-		e.preventDefault();
+      const element = (document.activeElement as unknown) as HTMLOrSVGElement;
+      element.blur && element.blur();
+      e.preventDefault();
       answer = answer.replace(/\s+/g, " ").trim();
       if (words[index] === answer) {
         score++;
-        await speak`Félicitation c'est la bonne réponse!`;
+        await speak`Félicitation c'est la bonne réponse!${200}`;
       } else {
-        await speak`Dommage, ça sera pour une prochaine fois!`;
+        await speak`Dommage, ça sera pour une prochaine fois!${200}`;
       }
     } finally {
       index++;
       answer = "";
+      if (words[index]) {
+        await speak("Voici le nouveau mot:");
+      }
     }
 
     repeat();
@@ -45,8 +51,8 @@ import SpeechAnimation from "./Components/SpeechAnimation.svelte";
   async function gameOver() {
     await speak`C'est fini!${200}Tu as obtenu:`;
     await speak(`${score} sur ${words.length}.`);
-    index = -2;
-	score = 0;
+    index++;
+    score = 0;
   }
 
   $: if (index == words.length) {
@@ -54,22 +60,35 @@ import SpeechAnimation from "./Components/SpeechAnimation.svelte";
   }
 </script>
 
+<!-- svelte-ignore a11y-autofocus -->
 <main>
-  <h1>Maxime: Dictée</h1>
+  <img src="/title.png" alt="Dictée" />
   {#if index == -2}
     <h2>Bienvenue dans le jeu de la dictée.</h2>
     <button on:click={start}>Démarrer</button>
   {:else if index >= 0 && index < words.length}
     <form on:submit={validate}>
-      <input type="text" bind:value={answer} />
-      <button type="button" on:click={repeat}>Écouter à nouveau</button>
-      <button type="submit">Valider</button>
+      <input
+        type="text"
+        bind:value={answer}
+        bind:this={answerField}
+        autofocus
+      />
+      <hr />
+      <button type="button" on:click={repeat} class="neutral">📢</button>
+      <button type="submit" disabled={!answer}>Valider</button>
     </form>
+  {:else if index > 0}
+    <h2>Bienvenue dans le jeu de la dictée.</h2>
+    <button on:click={start}>Nouvelle partie</button>
+	<br />
   {/if}
-  {#if index >= 0}
-    <div id="score">
-      {score} / {words.length}
-    </div>
+  {#if index > 0}
+    <ul>
+      {#each words.slice(0, index) as word}
+        <li transition:scale>{word}</li>
+      {/each}
+    </ul>
   {/if}
   <SpeechAnimation waveColor="red" />
 </main>
@@ -78,15 +97,30 @@ import SpeechAnimation from "./Components/SpeechAnimation.svelte";
   main {
     text-align: center;
     padding: 1em;
-    max-width: 240px;
+    max-width: 400px;
     margin: 0 auto;
   }
 
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
+  ul {
+    display: inline-block;
+    text-align: left;
+    background: #fff;
+    border: solid 1px #8502d9;
+    border-radius: 10px;
+    padding: 5px 30px;
+    font-weight: bold;
+  }
+
+  input[type=text]
+  {
+	border-radius: 20px;
+    border-color: #ccc;
+    padding: 10px;
+    outline: none;
+    text-align: center;
+    width: 400px;
+    font-size: 1.1em;
+    font-weight: bold;
   }
 
   @media (min-width: 640px) {
