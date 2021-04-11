@@ -86,6 +86,7 @@
   {:else if index >= 0 && index < words.length}
     <form on:submit={validate}>
       <input
+	  	class="answer"
         type="password"
         bind:value={answer}
         bind:this={answerField}
@@ -111,7 +112,7 @@
       {/each}
     </ul>
   {/if}
-  <SpeechAnimation waveColor="red" />
+  <SpeechAnimation waveColor="#8502d9" />
 </main>
 
 <style>
@@ -132,7 +133,7 @@
     font-weight: bold;
   }
 
-  input[type="text"] {
+  .answer {
     border-radius: 20px;
     border-color: #ccc;
     padding: 10px;
@@ -146,7 +147,7 @@
 
   @media (min-width: 640px) {
     main,
-    input[type="text"] {
+    .answer {
       max-width: none;
     }
   }
