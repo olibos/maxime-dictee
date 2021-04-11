@@ -4,7 +4,23 @@
   import { speak } from "./helpers/speak";
   import { scale } from "svelte/transition";
 
-  const words = ["les vacances", "du chocolat", "les cloches", "avril", "la nature", "le poussin", "l'arbre", "joyeuses Pâques", "l'herbe", "une chasse", "déposer", "ramasser", "elles poussent", "ils cherchent", "ils ont trouvé"];
+  const words = [
+    "les vacances",
+    "du chocolat",
+    "les cloches",
+    "avril",
+    "la nature",
+    "le poussin",
+    "l'arbre",
+    "joyeuses Pâques",
+    "l'herbe",
+    "une chasse",
+    "déposer",
+    "ramasser",
+    "elles poussent",
+    "ils cherchent",
+    "ils ont trouvé",
+  ];
 
   let index = -2;
   let answer = "";
@@ -58,6 +74,7 @@
   $: if (index == words.length) {
     gameOver();
   }
+  $:answerField && (answerField.type = 'text');
 </script>
 
 <!-- svelte-ignore a11y-autofocus -->
@@ -69,12 +86,13 @@
   {:else if index >= 0 && index < words.length}
     <form on:submit={validate}>
       <input
-        type="text"
+        type="password"
         bind:value={answer}
         bind:this={answerField}
-		spellcheck="false"
-		autocapitalize="none"
-		autocomplete="off"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
         autofocus
       />
       <hr />
@@ -84,7 +102,7 @@
   {:else if index > 0}
     <h2>Bienvenue dans le jeu de la dictée.</h2>
     <button on:click={start}>Nouvelle partie</button>
-	<br />
+    <br />
   {/if}
   {#if index > 0}
     <ul>
@@ -114,21 +132,21 @@
     font-weight: bold;
   }
 
-  input[type=text]
-  {
-	border-radius: 20px;
+  input[type="text"] {
+    border-radius: 20px;
     border-color: #ccc;
     padding: 10px;
     outline: none;
     text-align: center;
     width: 400px;
-	max-width: 80vw;
+    max-width: 80vw;
     font-size: 1.1em;
     font-weight: bold;
   }
 
   @media (min-width: 640px) {
-    main, input[type=text] {
+    main,
+    input[type="text"] {
       max-width: none;
     }
   }
