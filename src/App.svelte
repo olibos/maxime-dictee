@@ -3,6 +3,7 @@
   import { shuffle } from "./helpers/shuffle";
   import { speak } from "./helpers/speak";
   import { scale } from "svelte/transition";
+import Game from "./Components/Game.svelte";
 
   const words = [
     "les vacances",
@@ -22,6 +23,7 @@
     "ils ont trouvé",
   ];
 
+  let game: Game;
   let index = -2;
   let answer = "";
   let answerField: HTMLInputElement;
@@ -71,6 +73,24 @@
     score = 0;
   }
 
+  function handleChange(e:InputEvent & {currentTarget:HTMLInputElement})
+  {
+    if (!e.currentTarget.value)
+    {
+      return;
+    }
+
+    const word = words[index];
+    if (!word.startsWith(e.currentTarget.value))
+    {
+      e.currentTarget.value = answer;
+      game.fail();
+    }else{
+      game.success();
+      answer = e.currentTarget.value;
+    }
+  }
+
   $: if (index == words.length) {
     gameOver();
   }
@@ -86,10 +106,11 @@
   {:else if index >= 0 && index < words.length}
     <form on:submit={validate}>
       <input
-	  	class="answer"
+	  	  class="answer"
         type="password"
-        bind:value={answer}
+        value={answer}
         bind:this={answerField}
+        on:input={handleChange}
         autocomplete="off"
         autocorrect="off"
         autocapitalize="off"
@@ -114,6 +135,7 @@
   {/if}
   <SpeechAnimation waveColor="#8502d9" />
 </main>
+<Game bind:this={game} />
 
 <style>
   main {
