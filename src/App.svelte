@@ -6,21 +6,21 @@
 import Game from "./Components/Game.svelte";
 
   const words = [
-    "les vacances",
-    "du chocolat",
-    "les cloches",
-    "avril",
-    "la nature",
-    "le poussin",
-    "l'arbre",
-    "joyeuses Pâques",
-    "l'herbe",
-    "une chasse",
-    "déposer",
-    "ramasser",
-    "elles poussent",
-    "ils cherchent",
-    "ils ont trouvé",
+    "elle apprête",
+    "belle",
+    "des bretelles",
+    "une pelle",
+    "une ficelle",
+    "une poubelle",
+    "une casquette",
+    "une brochette",
+    "une brouette",
+    "la poussette",
+    "c'est chouette",
+    "il jette",
+    "une princesse",
+    "la vitesse",
+    "une tresse",
   ];
 
   let game: Game;
@@ -148,7 +148,7 @@ import Game from "./Components/Game.svelte";
   ul {
     display: inline-block;
     text-align: left;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.5);
     border: solid 1px #8502d9;
     border-radius: 10px;
     padding: 5px 30px;
