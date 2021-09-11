@@ -1,0 +1,65 @@
+DM_flying_scaled_01.png,752,0,86,117
+DM_flying_scaled_02.png,662,0,89,116
+DM_flying_scaled_03.png,557,320,92,113
+DM_flying_scaled_04.png,557,208,95,111
+DM_flying_scaled_05.png,557,434,92,113
+DM_flying_scaled_06.png,662,117,89,116
+DM_walk_00000.png,0,707,87,111
+DM_walk_00001.png,752,542,82,125
+DM_walk_00002.png,275,598,90,98
+DM_walk_00003.png,88,707,87,91
+DM_walk_00004.png,366,598,90,98
+DM_walk_00005.png,752,118,86,116
+DM_walk_00006.png,184,598,90,102
+DM_walk_00007.png,0,598,92,108
+DM_walk_00008.png,752,668,82,123
+DM_walk_00009.png,752,336,85,110
+DM_walk_00010.png,752,447,84,94
+DM_walk_00011.png,752,235,86,100
+DM_walk_00012.png,662,557,87,119
+DM_walk_00013.png,93,598,90,104
+dm_float_01.png,0,481,118,116
+dm_float_02.png,557,0,104,117
+dm_float_03.png,436,0,120,121
+dm_float_04.png,436,243,119,121
+dm_float_05.png,436,122,120,120
+steamkong0001.png,457,598,89,80
+steamkong0002.png,547,598,89,80
+steamkong0003.png,176,707,87,80
+steamkong0004.png,352,707,85,80
+steamkong0005.png,438,707,84,80
+steamkong0006.png,264,707,87,80
+steamkong0007.png,662,234,89,80
+steamkong0008.png,662,315,89,80
+steamkong0009.png,662,477,89,79
+steamkong0010.png,662,396,89,80
+snapping_loo_1.png,557,118,96,89
+snapping_loo_2.png,436,365,99,87
+snapping_loo_3.png,447,481,104,85
+snapping_loo_4.png,229,481,108,98
+snapping_loo_5.png,119,481,109,104
+snapping_loo_6.png,338,481,108,98
+robot anim_00000.png,2,2,86,91
+robot anim_00001.png,90,2,85,91
+robot anim_00002.png,90,95,85,92
+robot anim_00003.png,177,95,84,92
+robot anim_00004.png,263,95,84,92
+robot anim_00005.png,175,189,84,93
+robot anim_00006.png,261,189,83,93
+robot anim_00007.png,346,191,83,93
+robot anim_00008.png,2,282,83,93
+robot anim_00009.png,351,2,82,93
+robot anim_00010.png,341,286,82,94
+robot anim_00011.png,2,377,82,94
+robot anim_00012.png,86,378,82,94
+robot anim_00013.png,170,379,82,94
+robot anim_00014.png,254,379,82,94
+robot anim_00015.png,87,283,82,93
+robot anim_00016.png,171,284,83,93
+robot anim_00017.png,256,284,83,93
+robot anim_00018.png,349,97,84,92
+robot anim_00019.png,2,188,84,92
+robot anim_00020.png,88,189,85,92
+robot anim_00021.png,177,2,85,91
+robot anim_00022.png,264,2,85,91
+robot anim_00023.png,2,95,86,91

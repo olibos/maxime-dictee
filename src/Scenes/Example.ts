@@ -122,7 +122,7 @@ export class Example extends Scene
         });
         this.anims.create({
             key: 'walk',
-            frames: this.anims.generateFrameNames('mouse', { prefix: 'DM_walk_', zeroPad: 5, start: 0, end: 13, suffix: '.png' }),
+            frames: this.anims.generateFrameNames('mouse', { prefix: 'DM_walk_', zeroPad: 5, start: 0, end: 11, suffix: '.png' }),
             repeat: -1,
             frameRate: 15
         });

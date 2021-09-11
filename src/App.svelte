@@ -6,21 +6,16 @@
 import Game from "./Components/Game.svelte";
 
   const words = [
-    "elle apprête",
-    "belle",
-    "des bretelles",
-    "une pelle",
-    "une ficelle",
-    "une poubelle",
-    "une casquette",
-    "une brochette",
-    "une brouette",
-    "la poussette",
-    "c'est chouette",
-    "il jette",
-    "une princesse",
-    "la vitesse",
-    "une tresse",
+    "champ",
+    "chambre",
+    "jambon",
+    "important",
+    "imparfait",
+    "emploi",
+    "exemple",
+    "novembre",
+    "compter",
+    "pompe",
   ];
 
   let game: Game;

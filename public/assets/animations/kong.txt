@@ -1,0 +1,10 @@
+steamkong0001.png,0,243,89,80
+steamkong0002.png,0,162,89,80
+steamkong0003.png,86,81,87,80
+steamkong0004.png,0,81,85,80
+steamkong0005.png,0,0,84,80
+steamkong0006.png,86,0,87,80
+steamkong0007.png,174,161,89,80
+steamkong0008.png,90,243,89,80
+steamkong0009.png,174,0,89,79
+steamkong0010.png,174,80,89,80
