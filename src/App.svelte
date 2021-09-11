@@ -3,21 +3,24 @@
   import { shuffle } from "./helpers/shuffle";
   import { speak } from "./helpers/speak";
   import { scale } from "svelte/transition";
-import Game from "./Components/Game.svelte";
+  import Game from "./Components/Game.svelte";
+  import { initializeApp } from "firebase/app";
+  import { getFirestore, collection, setDoc, getDocs, deleteDoc, doc } from "firebase/firestore/lite"
+  let words = [];
 
-  const words = [
-    "champ",
-    "chambre",
-    "jambon",
-    "important",
-    "imparfait",
-    "emploi",
-    "exemple",
-    "novembre",
-    "compter",
-    "pompe",
-  ];
+  const firebaseConfig = {
+  apiKey: "AIzaSyDyuQc6i4RsMpvW5Yg7ObdBoYvJf9SSt08",
+  authDomain: "maxime-5f3e2.firebaseapp.com",
+  projectId: "maxime-5f3e2",
+  storageBucket: "maxime-5f3e2.appspot.com",
+  messagingSenderId: "251167109033",
+  appId: "1:251167109033:web:10d05ba210282a04d2deb8"
+  };
 
+  const app = initializeApp(firebaseConfig);
+  const firestore = getFirestore(app);
+  const wordCollection = collection(firestore, 'words');
+  getDocs(wordCollection).then(r => r.docs.map(d => d.data().value).filter(d => d)).then(w => words = w);
   let game: Game;
   let index = -2;
   let answer = "";
