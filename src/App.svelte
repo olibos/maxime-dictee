@@ -6,8 +6,7 @@
   import Game from "./Components/Game.svelte";
   import { initializeApp } from "firebase/app";
   import { getFirestore, collection, setDoc, getDocs, deleteDoc, doc } from "firebase/firestore/lite"
-  let words = [];
-
+  let words: {value:string, hint:string}[] = [];
   const firebaseConfig = {
   apiKey: "AIzaSyDyuQc6i4RsMpvW5Yg7ObdBoYvJf9SSt08",
   authDomain: "maxime-5f3e2.firebaseapp.com",
@@ -20,7 +19,7 @@
   const app = initializeApp(firebaseConfig);
   const firestore = getFirestore(app);
   const wordCollection = collection(firestore, 'words');
-  getDocs(wordCollection).then(r => r.docs.map(d => d.data().value).filter(d => d)).then(w => words = w);
+  getDocs(wordCollection).then(r => r.docs.map(d => d.data()).filter(d => d.value).map(({value, hint = value}) => ({value, hint}))).then(w => words = w);
   let game: Game;
   let index = -2;
   let answer = "";
@@ -38,7 +37,7 @@
 
   async function repeat() {
     answerField && answerField.focus();
-    words[index] && (await speak(words[index]));
+    words[index] && (await speak(words[index].hint));
   }
 
   async function validate(e: Event) {
@@ -47,7 +46,7 @@
       element.blur && element.blur();
       e.preventDefault();
       answer = answer.replace(/\s+/g, " ").trim();
-      if (words[index] === answer) {
+      if (words[index].value === answer) {
         score++;
         await speak`Félicitation c'est la bonne réponse!${200}`;
       } else {
@@ -78,7 +77,7 @@
       return;
     }
 
-    const word = words[index];
+    const word = words[index].value;
     if (!word.startsWith(e.currentTarget.value))
     {
       e.currentTarget.value = answer;
@@ -127,7 +126,7 @@
   {#if index > 0}
     <ul>
       {#each words.slice(0, index) as word}
-        <li transition:scale>{word}</li>
+        <li transition:scale>{word.value}</li>
       {/each}
     </ul>
   {/if}
