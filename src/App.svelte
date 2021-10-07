@@ -5,7 +5,8 @@
   import { scale } from "svelte/transition";
   import Game from "./Components/Game.svelte";
   import { initializeApp } from "firebase/app";
-  import { getFirestore, collection, setDoc, getDocs, deleteDoc, doc } from "firebase/firestore/lite"
+  import { getFirestore, collection, getDocs } from "firebase/firestore/lite"
+  
   let words: {value:string, hint:string}[] = [];
   const firebaseConfig = {
   apiKey: "AIzaSyDyuQc6i4RsMpvW5Yg7ObdBoYvJf9SSt08",
