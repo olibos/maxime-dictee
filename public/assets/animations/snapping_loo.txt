@@ -1,0 +1,6 @@
+snapping_loo_1.png,109,105,96,89
+snapping_loo_2.png,0,198,99,87
+snapping_loo_3.png,100,198,104,85
+snapping_loo_4.png,0,0,108,98
+snapping_loo_5.png,109,0,109,104
+snapping_loo_6.png,0,99,108,98

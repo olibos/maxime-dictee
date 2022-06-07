@@ -3,25 +3,25 @@
   import { shuffle } from "./helpers/shuffle";
   import { speak } from "./helpers/speak";
   import { scale } from "svelte/transition";
+  import Game from "./Components/Game.svelte";
+  import { initializeApp } from "firebase/app";
+  import { getFirestore, collection, getDocs } from "firebase/firestore/lite"
+  
+  let words: {value:string, hint:string}[] = [];
+  const firebaseConfig = {
+  apiKey: "AIzaSyDyuQc6i4RsMpvW5Yg7ObdBoYvJf9SSt08",
+  authDomain: "maxime-5f3e2.firebaseapp.com",
+  projectId: "maxime-5f3e2",
+  storageBucket: "maxime-5f3e2.appspot.com",
+  messagingSenderId: "251167109033",
+  appId: "1:251167109033:web:10d05ba210282a04d2deb8"
+  };
 
-  const words = [
-    "les vacances",
-    "du chocolat",
-    "les cloches",
-    "avril",
-    "la nature",
-    "le poussin",
-    "l'arbre",
-    "joyeuses Pâques",
-    "l'herbe",
-    "une chasse",
-    "déposer",
-    "ramasser",
-    "elles poussent",
-    "ils cherchent",
-    "ils ont trouvé",
-  ];
-
+  const app = initializeApp(firebaseConfig);
+  const firestore = getFirestore(app);
+  const wordCollection = collection(firestore, 'words');
+  getDocs(wordCollection).then(r => r.docs.map(d => d.data()).filter(d => d.value).map(({value, hint = value}) => ({value, hint}))).then(w => words = w);
+  let game: Game;
   let index = -2;
   let answer = "";
   let answerField: HTMLInputElement;
@@ -38,7 +38,7 @@
 
   async function repeat() {
     answerField && answerField.focus();
-    words[index] && (await speak(words[index]));
+    words[index] && (await speak(words[index].hint));
   }
 
   async function validate(e: Event) {
@@ -47,7 +47,7 @@
       element.blur && element.blur();
       e.preventDefault();
       answer = answer.replace(/\s+/g, " ").trim();
-      if (words[index] === answer) {
+      if (words[index].value === answer) {
         score++;
         await speak`Félicitation c'est la bonne réponse!${200}`;
       } else {
@@ -71,6 +71,24 @@
     score = 0;
   }
 
+  function handleChange(e:InputEvent & {currentTarget:HTMLInputElement})
+  {
+    if (!e.currentTarget.value)
+    {
+      return;
+    }
+
+    const word = words[index].value;
+    if (!word.startsWith(e.currentTarget.value))
+    {
+      e.currentTarget.value = answer;
+      game.fail();
+    }else{
+      game.success();
+      answer = e.currentTarget.value;
+    }
+  }
+
   $: if (index == words.length) {
     gameOver();
   }
@@ -86,10 +104,11 @@
   {:else if index >= 0 && index < words.length}
     <form on:submit={validate}>
       <input
-	  	class="answer"
+	  	  class="answer"
         type="password"
-        bind:value={answer}
+        value={answer}
         bind:this={answerField}
+        on:input={handleChange}
         autocomplete="off"
         autocorrect="off"
         autocapitalize="off"
@@ -108,12 +127,13 @@
   {#if index > 0}
     <ul>
       {#each words.slice(0, index) as word}
-        <li transition:scale>{word}</li>
+        <li transition:scale>{word.value}</li>
       {/each}
     </ul>
   {/if}
   <SpeechAnimation waveColor="#8502d9" />
 </main>
+<Game bind:this={game} />
 
 <style>
   main {
@@ -126,7 +146,7 @@
   ul {
     display: inline-block;
     text-align: left;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.5);
     border: solid 1px #8502d9;
     border-radius: 10px;
     padding: 5px 30px;
