@@ -6,6 +6,7 @@
   import Game from "./Components/Game.svelte";
   import { initializeApp } from "firebase/app";
   import { getFirestore, collection, getDocs } from "firebase/firestore/lite"
+  import Title from './assets/title.png';
   
   let words: {value:string, hint:string}[] = [];
   const firebaseConfig = {
@@ -71,7 +72,7 @@
     score = 0;
   }
 
-  function handleChange(e:InputEvent & {currentTarget:HTMLInputElement})
+  function handleChange(e: Event & { currentTarget: EventTarget & HTMLInputElement })
   {
     if (!e.currentTarget.value)
     {
@@ -97,7 +98,7 @@
 
 <!-- svelte-ignore a11y-autofocus -->
 <main>
-  <img src="/title.png" alt="Dictée" />
+  <img src={Title} alt="Dictée" />
   {#if index == -2}
     <h2>Bienvenue dans le jeu de la dictée.</h2>
     <button on:click={start}>Démarrer</button>
