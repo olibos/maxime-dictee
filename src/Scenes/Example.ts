@@ -18,9 +18,9 @@ export class Example extends Scene
         this.load.audio('jet_pack_loop', 'assets/jet_pack_loop.mp3');
         this.load.audio('ouch', 'assets/ouch.mp3');
     }
-    player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
-    background: Phaser.GameObjects.TileSprite;
-    floor: Phaser.GameObjects.TileSprite;
+    player!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+    background!: Phaser.GameObjects.TileSprite;
+    floor!: Phaser.GameObjects.TileSprite;
     fail()
     {
         const robot = this.physics.add.sprite(this.sys.game.config.width as number, ROBOT_Y, 'robot').play('attack').setFlipX(true);
@@ -63,12 +63,12 @@ export class Example extends Scene
             })
         ];
     }
-    fly: Phaser.Sound.BaseSound;
-    flyLoop: Phaser.Sound.BaseSound;
-    failedEnemies: Phaser.GameObjects.Group;
-    successEnemies: Phaser.GameObjects.Group;
-    playerTween: Phaser.Tweens.Tween;
-    state: PlayerState;
+    fly!: Phaser.Sound.BaseSound;
+    flyLoop!: Phaser.Sound.BaseSound;
+    failedEnemies!: Phaser.GameObjects.Group;
+    successEnemies!: Phaser.GameObjects.Group;
+    playerTween?: Phaser.Tweens.Tween;
+    state: PlayerState = 'walk';
     setPlayerAnimation(state: PlayerState, config?: object | Phaser.Types.Tweens.TweenBuilderConfig, onStart?: () => void)
     {
         console.info('setPlayerAnimation', this.state, state);
@@ -136,7 +136,8 @@ export class Example extends Scene
 
         let groundX = this.sys.game.config.width as number / 2;
         let ground = this.add.tileSprite(0, this.sys.game.config.height as number - 77, this.sys.game.config.width as number, this.sys.game.config.height as number, "floor").setOrigin(0, 0).setScrollFactor(0);
-        this.floor = this.physics.add.existing(ground, true);
+        this.physics.add.existing(ground, true);
+        this.floor = ground;
         this.failedEnemies = this.add.group();
         this.successEnemies = this.add.group();
         const player = this.physics.add.sprite(groundX, PLAYER_Y, 'mouse');
@@ -171,7 +172,7 @@ export class Example extends Scene
         });
     }
 
-    update(time, delta)
+    update(time: number, delta: number)
     {
         this.floor.tilePositionX += delta / 5;
         this.background.tilePositionX += delta / 15;

@@ -32,7 +32,7 @@
 
     setup(width);
     return {
-      update(width)
+      update(width: number)
       {
         setup(width);
       },
@@ -44,4 +44,4 @@
 </script>
 
 <svelte:window bind:innerWidth />
-<canvas width={innerWidth} height="600" use:phaser={innerWidth} />
+<canvas width={innerWidth} height="600" use:phaser={innerWidth}></canvas>
